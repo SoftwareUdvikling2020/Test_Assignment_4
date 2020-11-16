@@ -21,17 +21,14 @@ public class TicTacToe {
             Scanner scanner = new Scanner(System.in);
             String inputString = scanner.nextLine();
 
-            System.out.println(gameStatus);
             String[] parts = inputString.split(" ");
             int row = game.stringToInt(parts[0]);
             int col = game.stringToInt(parts[1]);
             int player = game.stringToInt(parts[2]);
-            Pair = takeTurn(row, col, player);
-
-            System.out.println(gameStatus);
+            Pair<String, Boolean> result = takeTurn(row, col, player);
+            gameStatus = result.getRight();
+            System.out.println(result.getLeft());
             game.printBoard(System.out);
-
-
         }
 
     }
@@ -70,8 +67,8 @@ public class TicTacToe {
         if(checkIfWon(row, col, player)) return Pair.of(player + " Won the game!",true);
         else if(checkIfDraw()) return Pair.of("Draw!",true);
 
-
-        return Pair.of();
+        if(player == CROSS) return Pair.of(CIRCLE + " Now has the turn.", false);
+        else return Pair.of(CROSS + " Now has the turn.", false);
     }
 
     public int stringToInt(String toConvert) {
