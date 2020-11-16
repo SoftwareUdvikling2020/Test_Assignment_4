@@ -3,6 +3,7 @@ package dk.cphbusiness;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -29,13 +30,13 @@ public class TicTacToe {
                 int player = game.stringToInt(parts[2]);
 
                 Pair<String, Boolean> result = takeTurn(row, col, player);
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                PrintStream out = new PrintStream(bytes);
+
                 gameStatus = result.getRight();
                 System.out.println(result.getLeft());
                 game.printBoard(System.out);
-            } else {
-                System.out.println("Invalid");
             }
-
         }
 
     }
@@ -45,7 +46,7 @@ public class TicTacToe {
     }
 
     public boolean checkInput(String str) {
-        if (str.trim().replaceAll(" ","").matches("^[0-9]+$")) return true;
+        if (str.trim().replaceAll(" ", "").matches("^[0-9]+$")) return true;
         else return false;
     }
 
@@ -78,8 +79,9 @@ public class TicTacToe {
     }
 
     private static Pair<String, Boolean> takeTurn(int row, int col, int player) {
-        if (board[row][col] == EMPTY && (player == CROSS || player == CIRCLE)) board[row][col] = player;
-        else return Pair.of("Player cannot place brick on same filled space", false);
+        if (row >= 0 && row <= 2 && col >= 0 && col <= 2 && board[row][col] == EMPTY && (player == CROSS || player == CIRCLE)  ) {
+            board[row][col] = player;}
+        else return Pair.of("Unvalid turn, try again player "+player, false);
 
         if (checkIfWon(row, col, player)) return Pair.of(player + " Won the game!", true);
         else if (checkIfDraw()) return Pair.of("Draw!", true);
