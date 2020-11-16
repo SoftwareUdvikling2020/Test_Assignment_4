@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicTacToe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToe_Assigment4$TicTacToeTest.exec</a> &gt; <a href="index.source.html" class="el_package">dk.cphbusiness</a> &gt; <span class="el_source">TicTacToe.java</span></div><h1>TicTacToe.java</h1><pre class="source lang-java linenums">package dk.cphbusiness;
+
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.io.PrintStream;
+import java.util.Scanner;
+
+<span class="fc" id="L9">public class TicTacToe {</span>
+<span class="fc" id="L10">    public static boolean gameStatus = false;</span>
+    public static final int ROWS = 3, COLS = 3, EMPTY = 0, CIRCLE = 1, CROSS = 2;
+    public static final String CIRCLE_STRING = &quot;o&quot;, CROSS_STRING = &quot;x&quot;, EMPTY_STRING = &quot;_&quot;;
+<span class="fc" id="L13">    public static int[][] board = new int[ROWS][COLS];</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L16">        TicTacToe game = new TicTacToe();</span>
+<span class="nc" id="L17">        game.startGame();</span>
+
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        while (!gameStatus) {</span>
+<span class="nc" id="L20">            System.out.print(&quot;Enter a coords x, y, player: &quot;);</span>
+<span class="nc" id="L21">            Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L22">            String inputString = scanner.nextLine();</span>
+
+<span class="nc bnc" id="L24" title="All 2 branches missed.">            if (game.checkInput(inputString)) {</span>
+<span class="nc" id="L25">                String[] parts = inputString.split(&quot; &quot;);</span>
+
+<span class="nc" id="L27">                int row = game.stringToInt(parts[0]);</span>
+<span class="nc" id="L28">                int col = game.stringToInt(parts[1]);</span>
+<span class="nc" id="L29">                int player = game.stringToInt(parts[2]);</span>
+
+<span class="nc" id="L31">                Pair&lt;String, Boolean&gt; result = takeTurn(row, col, player);</span>
+<span class="nc" id="L32">                gameStatus = result.getRight();</span>
+<span class="nc" id="L33">                System.out.println(result.getLeft());</span>
+<span class="nc" id="L34">                game.printBoard(System.out);</span>
+<span class="nc" id="L35">            } else {</span>
+<span class="nc" id="L36">                System.out.println(&quot;Invalid&quot;);</span>
+            }
+
+<span class="nc" id="L39">        }</span>
+
+<span class="nc" id="L41">    }</span>
+
+    public static void setBoard(int[][] board) {
+<span class="fc" id="L44">        TicTacToe.board = board;</span>
+<span class="fc" id="L45">    }</span>
+
+    public boolean checkInput(String str) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (str.trim().replaceAll(&quot; &quot;,&quot;&quot;).matches(&quot;^[0-9]+$&quot;)) return true;</span>
+<span class="nc" id="L49">        else return false;</span>
+    }
+
+    public static boolean checkIfDraw() {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (int row = 0; row &lt; ROWS; ++row) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            for (int col = 0; col &lt; COLS; ++col) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                if (board[row][col] == EMPTY) {</span>
+<span class="fc" id="L56">                    return false;</span>
+                }
+            }
+        }
+<span class="fc" id="L60">        return true;</span>
+    }
+
+    public static boolean checkIfWon(int row, int col, int player) {
+<span class="pc bpc" id="L64" title="15 of 28 branches missed.">        return (board[row][0] == player         // 3-in-the-row</span>
+                &amp;&amp; board[row][1] == player
+                &amp;&amp; board[row][2] == player
+                || board[0][col] == player      // 3-in-the-column
+                &amp;&amp; board[1][col] == player
+                &amp;&amp; board[2][col] == player
+                || row == col            // 3-in-the-diagonal
+                &amp;&amp; board[0][0] == player
+                &amp;&amp; board[1][1] == player
+                &amp;&amp; board[2][2] == player
+                || row + col == 2  // 3-in-the-opposite-diagonal
+                &amp;&amp; board[0][2] == player
+                &amp;&amp; board[1][1] == player
+                &amp;&amp; board[2][0] == player);
+    }
+
+    private static Pair&lt;String, Boolean&gt; takeTurn(int row, int col, int player) {
+<span class="nc bnc" id="L81" title="All 6 branches missed.">        if (board[row][col] == EMPTY &amp;&amp; (player == CROSS || player == CIRCLE)) board[row][col] = player;</span>
+<span class="nc" id="L82">        else return Pair.of(&quot;Player cannot place brick on same filled space&quot;, false);</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (checkIfWon(row, col, player)) return Pair.of(player + &quot; Won the game!&quot;, true);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        else if (checkIfDraw()) return Pair.of(&quot;Draw!&quot;, true);</span>
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (player == CROSS) return Pair.of(&quot;Player: &quot; + CIRCLE + &quot; Now has the turn.&quot;, false);</span>
+<span class="nc" id="L88">        else return Pair.of(&quot;Player: &quot; + CROSS + &quot; Now has the turn.&quot;, false);</span>
+    }
+
+    public int stringToInt(String toConvert) {
+<span class="nc" id="L92">        return Integer.parseInt(toConvert);</span>
+    }
+
+    public void startGame() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (int row = 0; row &lt; ROWS; ++row) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            for (int col = 0; col &lt; COLS; ++col) {</span>
+<span class="nc" id="L98">                board[row][col] = EMPTY;</span>
+            }
+        }
+<span class="nc" id="L101">    }</span>
+
+    public void printBoard(PrintStream out) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        for (int col = 0; col &lt; COLS; ++col) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">            for (int row = 0; row &lt; ROWS; ++row) {</span>
+<span class="nc" id="L106">                int space = board[row][col];</span>
+<span class="nc" id="L107">                printConvert(out, space);</span>
+            }
+<span class="nc" id="L109">            out.println();</span>
+        }
+<span class="nc" id="L111">    }</span>
+
+    private void printConvert(PrintStream out, int space) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (space == EMPTY) out.print(EMPTY_STRING + &quot; &quot;);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (space == CIRCLE) out.print(CIRCLE_STRING + &quot; &quot;);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if (space == CROSS) out.print(CROSS_STRING + &quot; &quot;);</span>
+<span class="nc" id="L117">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
