@@ -27,11 +27,7 @@ public class TicTacToe {
 
         }
     }
-    public boolean checkTurn(){
-        board[][] && board[][] && board[][]
 
-        return false
-    }
     private static void takeTurn(int i, int i2, int i3) {
         board[i][i2] = i3;
     }
