@@ -1,8 +1,8 @@
 package dk.cphbusiness;
 
 
-
 import org.apache.commons.lang3.tuple.Pair;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -21,17 +21,32 @@ public class TicTacToe {
             Scanner scanner = new Scanner(System.in);
             String inputString = scanner.nextLine();
 
-            String[] parts = inputString.split(" ");
-            int row = game.stringToInt(parts[0]);
-            int col = game.stringToInt(parts[1]);
-            int player = game.stringToInt(parts[2]);
+            if (game.checkInput(inputString)) {
+                String[] parts = inputString.split(" ");
 
-            Pair<String, Boolean> result = takeTurn(row, col, player);
-            gameStatus = result.getRight();
-            System.out.println(result.getLeft());
-            game.printBoard(System.out);
+                int row = game.stringToInt(parts[0]);
+                int col = game.stringToInt(parts[1]);
+                int player = game.stringToInt(parts[2]);
+
+                Pair<String, Boolean> result = takeTurn(row, col, player);
+                gameStatus = result.getRight();
+                System.out.println(result.getLeft());
+                game.printBoard(System.out);
+            } else {
+                System.out.println("Invalid");
+            }
+
         }
 
+    }
+
+    public static void setBoard(int[][] board) {
+        TicTacToe.board = board;
+    }
+
+    public boolean checkInput(String str) {
+        if (str.trim().replaceAll(" ","").matches("^[0-9]+$")) return true;
+        else return false;
     }
 
     public static boolean checkIfDraw() {
@@ -63,14 +78,14 @@ public class TicTacToe {
     }
 
     private static Pair<String, Boolean> takeTurn(int row, int col, int player) {
-        if(board[row][col] == EMPTY) board[row][col] = player;
+        if (board[row][col] == EMPTY && (player == CROSS || player == CIRCLE)) board[row][col] = player;
         else return Pair.of("Player cannot place brick on same filled space", false);
 
-        if(checkIfWon(row, col, player)) return Pair.of(player + " Won the game!",true);
-        else if(checkIfDraw()) return Pair.of("Draw!",true);
+        if (checkIfWon(row, col, player)) return Pair.of(player + " Won the game!", true);
+        else if (checkIfDraw()) return Pair.of("Draw!", true);
 
-        if(player == CROSS) return Pair.of("Player: "+CIRCLE + " Now has the turn.", false);
-        else return Pair.of("Player: "+CROSS + " Now has the turn.", false);
+        if (player == CROSS) return Pair.of("Player: " + CIRCLE + " Now has the turn.", false);
+        else return Pair.of("Player: " + CROSS + " Now has the turn.", false);
     }
 
     public int stringToInt(String toConvert) {
