@@ -3,10 +3,23 @@
 ### [Assignment](https://datsoftlyngby.github.io/soft2020fall/resources/672dd591-assignment-04.pdf)  
 Mathias  
 Magnus  
-Rasmus
+Rasmus  
+  
+## Running TDD project (TicTacToe)  
+  
+#### Coverage report with JaCoCo  
+We used JaCoCo included in intellij --> edit configurations --> Code coverage --> picked jacJaCoCo as coverage runner  
+JaCoCo result can be found in source of this project
+
+#### Mutation testing with PITest  
+`mvn org.pitest:pitest-maven:mutationCoverage` or run through intellij Maven.   
+PITest result can be found at Assigment_4/target/pit-reports/  
+
+#### Static analysis with SonarCube  
 
 
-## Mockito powerups  
+  
+## Mockito powerups answers:  
 Vi har i mange tilfælde brugt [Mockito Verify Cookbook](https://www.baeldung.com/mockito-verify) fra baeldung
 
 
