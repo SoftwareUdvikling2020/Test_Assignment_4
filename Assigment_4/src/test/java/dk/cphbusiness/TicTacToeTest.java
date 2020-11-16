@@ -302,21 +302,25 @@ public class TicTacToeTest {
     class printTest {
 
 
-        private final PrintStream standardOut = System.out;
-        private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        private  PrintStream originalSystemOut;
+        private  ByteArrayOutputStream systemOutContent;
 
 
 
         @BeforeEach
-        public void setUp() {
-            System.setOut(new PrintStream(outputStreamCaptor));
+        void redirectSystemOutStream() {
+
+            originalSystemOut = System.out;
+
+            // given
+            systemOutContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(systemOutContent));
         }
 
         @AfterEach
-        public void tearDown() {
-            System.setOut(standardOut);
+        void restoreSystemOutStream() {
+            System.setOut(originalSystemOut);
         }
-
 
         @Test
         void printBorad_MustResturnTrue_WhenPrintBoardWithChange() {
@@ -339,7 +343,7 @@ public class TicTacToeTest {
             ttt.printBoard(out);
 
             // Assert
-            Assertions.assertEquals(expected, outputStreamCaptor.toString()
+            Assertions.assertEquals(expected, systemOutContent.toString()
                     .trim());
         }
 
@@ -364,7 +368,7 @@ public class TicTacToeTest {
             ttt.printBoard(out);
 
             // Assert
-            Assertions.assertEquals(expected, outputStreamCaptor.toString()
+            Assertions.assertEquals(expected, systemOutContent.toString()
                     .trim());
         }
 
