@@ -8,15 +8,15 @@ Rasmus
 ## Running TDD project (TicTacToe)  
   
 #### Coverage report with JaCoCo  
-We used JaCoCo included in intellij --> edit configurations --> Code coverage --> picked jacJaCoCo as coverage runner  
+**Run:** We used JaCoCo included in intellij --> edit configurations --> Code coverage --> picked jacJaCoCo as coverage runner  
 JaCoCo result can be found in source of this project
 
 #### Mutation testing with PITest  
-`mvn org.pitest:pitest-maven:mutationCoverage` or run through intellij Maven.   
+**Run:** `mvn org.pitest:pitest-maven:mutationCoverage` or run through intellij Maven.   
 PITest result can be found at Assigment_4/target/pit-reports/  
 
 #### Static analysis with SonarCube  
-
+**Run:** 
 
   
 ## Mockito powerups answers:  
