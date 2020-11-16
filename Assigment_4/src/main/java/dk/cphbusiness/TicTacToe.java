@@ -25,6 +25,7 @@ public class TicTacToe {
             int row = game.stringToInt(parts[0]);
             int col = game.stringToInt(parts[1]);
             int player = game.stringToInt(parts[2]);
+
             Pair<String, Boolean> result = takeTurn(row, col, player);
             gameStatus = result.getRight();
             System.out.println(result.getLeft());
@@ -62,13 +63,14 @@ public class TicTacToe {
     }
 
     private static Pair<String, Boolean> takeTurn(int row, int col, int player) {
-        board[row][col] = player;
+        if(board[row][col] == EMPTY) board[row][col] = player;
+        else return Pair.of("Player cannot place brick on same filled space", false);
 
         if(checkIfWon(row, col, player)) return Pair.of(player + " Won the game!",true);
         else if(checkIfDraw()) return Pair.of("Draw!",true);
 
-        if(player == CROSS) return Pair.of(CIRCLE + " Now has the turn.", false);
-        else return Pair.of(CROSS + " Now has the turn.", false);
+        if(player == CROSS) return Pair.of("Player: "+CIRCLE + " Now has the turn.", false);
+        else return Pair.of("Player: "+CROSS + " Now has the turn.", false);
     }
 
     public int stringToInt(String toConvert) {
