@@ -45,6 +45,10 @@ public class TicTacToe {
         TicTacToe.board = board;
     }
 
+    public static int[][] getBoard() {
+        return board;
+    }
+
     public boolean checkInput(String str) {
         if (str.trim().replaceAll(" ", "").matches("^[0-9]+$")) return true;
         else return false;
@@ -113,9 +117,9 @@ public class TicTacToe {
     }
 
     private void printConvert(PrintStream out, int space) {
-        if (space == EMPTY) out.print(EMPTY_STRING + " ");
-        if (space == CIRCLE) out.print(CIRCLE_STRING + " ");
-        if (space == CROSS) out.print(CROSS_STRING + " ");
+        if (space == EMPTY) System.out.print(EMPTY_STRING + " ");
+        if (space == CIRCLE) System.out.print(CIRCLE_STRING + " ");
+        if (space == CROSS) System.out.print(CROSS_STRING + " ");
     }
 
 }
