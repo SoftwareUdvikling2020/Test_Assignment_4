@@ -5,9 +5,38 @@
 
 
 ## Mockito powerups  
+Vi har i mange tilfælde brugt [Mockito Verify Cookbook](https://www.baeldung.com/mockito-verify) fra baeldung
+
 
 #### • How do you verify that a mock was called?  
 ``` java 
+verify(mockObject).someMethodOfMockObject(someArgument); 
+```
+
+#### • How do you verify that a mock was NOT called?  
+
+``` java
+// verify no interaction with the whole mock occurred
+List<String> mockedList = mock(MyList.class);
+verifyZeroInteractions(mockedList);
+
+// verify no interaction with a specific method occurred
+List<String> mockedList = mock(MyList.class);
+verify(mockedList, times(0)).size();
+```  
+
+#### • How do you specify how many times a mock should have been called?  
+``` java 
+
+List<String> mockedList = mock(MyList.class);
+mockedList.size();
+verify(mockedList, times(1)).size();
+```
+  
+#### • How do you verify that a mock was called with specific arguments? 
+``` java 
+
+// Eksempel lånt fra Martin
 @Test
     public void mustCallStorageWhenCreatingCustomer() throws SQLException {
         // Arrange
@@ -26,8 +55,16 @@
                                 x.lastname.equals(lastName)));
     }
 ```
-#### • How do you verify that a mock was NOT called?  
-#### • How do you specify how many times a mock should have been called?  
-#### • How do you verify that a mock was called with specific arguments?  
+
 #### • How do you use a predicate to verify the properties of the arguments given to a call to the mock?  
+
+``` java 
+import static org.mockito.Mockito.*;
+
+
+// Eksempel fra Booking opgaven
+
+SmsMessage sms = new SmsMessage(recipient,message);
+        when(smsService.sendSms(sms)).thenReturn(true);
+```
 
