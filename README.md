@@ -16,9 +16,21 @@ JaCoCo result can be found in source of this project
 PITest result can be found at Assigment_4/target/pit-reports/  
 
 #### Static analysis with SonarCube  
-**Run:** 
+**Run:** docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
 
-  
+Gå til: Localhost:9000
+
+Login med username: admin password: admin
+
+Click på plusset i højre hjørne for at oprette nyt projekt til static analysis, og udfyld information for tilføjelse af projekt
+
+Derefter kør commanden man får givet efter at havde oprettet et projekt, i roden af projektet - dermed kommer projektet op på sonarqube
+
+Refresh siden og gå ind på projekter, hvor projektet er kommet op
+
+
+Ref til guide: https://docs.sonarqube.org/latest/setup/get-started-2-minutes/
+
 ## Mockito powerups answers:  
 Vi har i mange tilfælde brugt [Mockito Verify Cookbook](https://www.baeldung.com/mockito-verify) fra baeldung
 
